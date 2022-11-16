@@ -4,7 +4,7 @@ import random
 import pickle
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption(("Catch-A-Crunk"))
+pygame.display.set_caption(("Catch-A-Cloud"))
 clock = pygame.time.Clock()
 game_font = pygame.font.SysFont("arialblack", 40)
 game_active = True
@@ -25,24 +25,24 @@ plane_catch_how_to = pygame.transform.scale(plane_catch, (60,60))
 plane_how_to_rect = plane_catch.get_rect(topright = (370,225))
 #cloud
 cloud = pygame.image.load('graphic/cloud.png').convert_alpha()
-cloud = pygame.transform.scale(cloud, (50, 50))
+cloud = pygame.transform.scale(cloud, (80, 80))
 cloud_rect = cloud.get_rect(topright=(random.randint(100, 1180), 0))
-cloud_how_to = pygame.transform.scale(cloud,(40,40))
+cloud_how_to = pygame.transform.scale(cloud,(50,40))
 cloud_how_to_rect = cloud_how_to.get_rect(topright = (178,279))
 #blackcloud
-blackcloud = pygame.image.load('graphic/bc.png').convert_alpha()
-blackcloud = pygame.transform.scale(blackcloud, (50, 50))
+blackcloud = pygame.image.load('graphic/blackcloud.png').convert_alpha()
+blackcloud = pygame.transform.scale(blackcloud, (80, 80))  
 blackcloud_rect = blackcloud.get_rect(topright=(random.randint(100, 1280), 0))
 blackcloud_how_to = pygame.transform.scale(blackcloud,(40,40))
 blackcloud_how_to_rect = blackcloud_how_to.get_rect(topright = (178,279))
-#bolt
-lightning_bolt = pygame.image.load('graphic/blackcloud.png').convert_alpha()
-lightning_bolt = pygame.transform.scale(lightning_bolt, (45, 50))
-lightning_bolt_rect = lightning_bolt.get_rect(topright=(random.randint(50, 400), 0))
-lighting_bolt_how_to = lightning_bolt.get_rect(midbottom = (260, 380))
+#lightning
+lightning = pygame.image.load('graphic/lightning.png').convert_alpha()
+lightning = pygame.transform.scale(lightning, (80, 80))
+lightning_rect = lightning.get_rect(topright=(random.randint(50, 400), 0))
+lighting_how_to = lightning.get_rect(midbottom = (260, 380))
 #rainbow
 rainbow = pygame.image.load('graphic/rainbow.png').convert_alpha()
-rainbow = pygame.transform.scale(rainbow, (50, 50))
+rainbow = pygame.transform.scale(rainbow, (80, 50))
 rainbow_rect = rainbow.get_rect(topright=(random.randint(50, 400), 0))
 rainbow_how_to = rainbow.get_rect(topright = (182,375))
 
@@ -75,8 +75,8 @@ def plane_movement():
           plane_catch_rect.left = 0
   if plane_catch_rect.right >= 1280:
           plane_catch_rect.right = 1280
-  if plane_catch_rect.top <= 450:
-          plane_catch_rect.top = 450
+  if plane_catch_rect.top <= 400:
+          plane_catch_rect.top = 400
   if plane_catch_rect.bottom >= 720:
           plane_catch_rect.bottom = 720
   return screen.blit(plane_catch, plane_catch_rect)
@@ -85,10 +85,10 @@ def cloud_movement(cloud_rect_list):
     if cloud_rect_list:
         for cloud_rect in cloud_rect_list:
             cloud_rect.y += 4
-            if cloud_rect.x <= 0:
-                cloud_rect.x = 0
-            if cloud_rect.x >= 1280:
-                cloud_rect.x = 1280
+            if cloud_rect.x <= 100:
+                cloud_rect.x = 100
+            if cloud_rect.x >= 1180:
+                cloud_rect.x = 1180
             if cloud_rect.y >= 720:
                 cloud_rect.y = 720
             screen.blit(cloud, cloud_rect)
@@ -101,10 +101,10 @@ def blackcloud_movement(blackcloud_rect_list):
     if blackcloud_rect_list:
         for blackcloud_rect in blackcloud_rect_list:
             blackcloud_rect.y += 4
-            if blackcloud_rect.x <= 0:
-                blackcloud_rect.x = 0
-            if blackcloud_rect.x >= 1280:
-                blackcloud_rect.x = 1280
+            if blackcloud_rect.x <= 100:
+                blackcloud_rect.x = 100
+            if blackcloud_rect.x >= 1180:
+                blackcloud_rect.x = 1180
             if blackcloud_rect.y >= 720:
                 blackcloud_rect.y = 720
             screen.blit(blackcloud, blackcloud_rect)
@@ -112,33 +112,33 @@ def blackcloud_movement(blackcloud_rect_list):
         return blackcloud_rect_list
     else:
         return []
-def lightning_bolt_movement(bolt_rect_list):
-    if bolt_rect_list:
-        for lightning_bolt_rect in bolt_rect_list:
-            lightning_bolt_rect.y += 5
-            if lightning_bolt_rect.x <= 0:
-                lightning_bolt_rect.x = 0
-            if lightning_bolt_rect.x >= 400:
-                lightning_bolt_rect.x = 400
-            if lightning_bolt_rect.y >= 480:
-                lightning_bolt_rect.y = 600
-            screen.blit(lightning_bolt, lightning_bolt_rect)
-        bolt_rect_list = [bolt for bolt in bolt_rect_list if bolt.y < 600]
-        return bolt_rect_list
+def lightning_movement(lightning_rect_list):
+    if lightning_rect_list:
+        for lightning_rect in lightning_rect_list:
+            lightning_rect.y += 5
+            if lightning_rect.x <= 100:
+                lightning_rect.x = 100
+            if lightning_rect.x >= 1180:
+                lightning_rect.x = 1180
+            if lightning_rect.y >= 720:
+                lightning_rect.y = 720
+            screen.blit(lightning, lightning_rect)
+        lightning_rect_list = [lightning for lightning in lightning_rect_list if lightning.y < 720]
+        return lightning_rect_list
     else:
         return []
 def rainbow_movement(rainbow_rect_list):
     if rainbow_rect_list:
         for rainbow_rect in rainbow_rect_list:
             rainbow_rect.y += 5
-            if rainbow_rect.x <= 0:
-                rainbow_rect.x = 0
-            if rainbow_rect.x >= 400:
-                rainbow_rect.x = 400
-            if rainbow_rect.y >= 480:
-                rainbow_rect.y = 600
+            if rainbow_rect.x <= 100:
+                rainbow_rect.x = 100
+            if rainbow_rect.x >= 1180:
+                rainbow_rect.x = 1180
+            if rainbow_rect.y >= 720:
+                rainbow_rect.y = 720
             screen.blit(rainbow, rainbow_rect)
-        rainbow_rect_list = [rainbow for rainbow in rainbow_rect_list if rainbow.y < 600]
+        rainbow_rect_list = [rainbow for rainbow in rainbow_rect_list if rainbow.y < 720]
         return rainbow_rect_list
     else:
         return []
@@ -165,7 +165,7 @@ def final_score_display(final_score, high_score):
     pygame.draw.ellipse(screen, 'plum2', score_surf_rect)
     screen.blit(score_surf, score_surf_rect)
 def end_of_game_display():
-  kim_game_over = pygame.image.load('KimBackground.png').convert_alpha()
+  kim_game_over = pygame.image.load('graphic/bg.png').convert_alpha()
   kim_game_over = pygame.transform.scale(kim_game_over, (400, 600))
   screen.blit(kim_game_over, (0,0))
 
@@ -175,54 +175,54 @@ def welcome_surf():
   welcome_surf_rect = welcome_surf.get_rect(midbottom = (200,170))
   how_to_font = pygame.font.SysFont('arialblack', 30)
   how_to = how_to_font.render("How To Play", False, 'deeppink')
-  how_to_rect = how_to.get_rect(midbottom = (200, 230))
+  how_to_rect = how_to.get_rect(midbottom = (400, 460))
   screen.blit(how_to, how_to_rect)
   screen.blit(welcome_surf, welcome_surf_rect)
-def how_to_move():
-  how_to_play_font = pygame.font.SysFont('arialblack', 28)
-  how_to_play = how_to_play_font.render("Use the arrow keys to move", False, 'deeppink')
-  how_to_play_rect = how_to_play.get_rect(midbottom = (182,277))
-  screen.blit(plane_catch_how_to, plane_how_to_rect)
-  screen.blit(how_to_play, how_to_play_rect)
-def catching_cloud():
-  cloud_catch_font = pygame.font.SysFont('arialblack', 28)
-  cloud_catch = cloud_catch_font.render("Catch            to earn points!", False, 'deeppink')
-  cloud_catch_rect = cloud_catch.get_rect(midbottom = (200,325))
-  screen.blit(cloud_catch, cloud_catch_rect)
-  screen.blit(cloud, cloud_how_to_rect)
-def catching_blackcloud():
-  blackcloud_catch_font = pygame.font.SysFont('arialblack', 28)
-  blackcloud_catch = blackcloud_catch_font.render("Catch            to earn points!", False, 'deeppink')
-  blackcloud_catch_rect = blackcloud_catch.get_rect(midbottom = (200,325))
-  screen.blit(blackcloud_catch, blackcloud_catch_rect)
-  screen.blit(blackcloud, blackcloud_how_to_rect)
+# def how_to_move():
+#   how_to_play_font = pygame.font.SysFont('arialblack', 28)
+#   how_to_play = how_to_play_font.render("Use the arrow keys to move", False, 'deeppink')
+#   how_to_play_rect = how_to_play.get_rect(midbottom = (182,277))
+#   screen.blit(plane_catch_how_to, plane_how_to_rect)
+#   screen.blit(how_to_play, how_to_play_rect)
+# def catching_cloud():
+#   cloud_catch_font = pygame.font.SysFont('arialblack', 28)
+#   cloud_catch = cloud_catch_font.render("Catch            to earn points!", False, 'deeppink')
+#   cloud_catch_rect = cloud_catch.get_rect(midbottom = (200,325))
+#   screen.blit(cloud_catch, cloud_catch_rect)
+#   screen.blit(cloud, cloud_how_to_rect)
+# def catching_blackcloud():
+  # blackcloud_catch_font = pygame.font.SysFont('arialblack', 28)
+  # blackcloud_catch = blackcloud_catch_font.render("Catch            to earn points!", False, 'deeppink')
+  # blackcloud_catch_rect = blackcloud_catch.get_rect(midbottom = (200,325))
+  # screen.blit(blackcloud_catch, blackcloud_catch_rect)
+  # screen.blit(blackcloud, blackcloud_how_to_rect)
  
-def watch_out():
-  watch_out_font = pygame.font.SysFont('arialblack', 28)
-  watch_out_surf = watch_out_font.render("Watch out for", False, 'deeppink')
-  watch_out_surf_rect = watch_out_surf.get_rect(midbottom = (180,373))
-  screen.blit(watch_out_surf , watch_out_surf_rect)
-  screen.blit(lightning_bolt, lighting_bolt_how_to)
+# def watch_out():
+#   watch_out_font = pygame.font.SysFont('arialblack', 28)
+#   watch_out_surf = watch_out_font.render("Watch out for", False, 'deeppink')
+#   watch_out_surf_rect = watch_out_surf.get_rect(midbottom = (180,373))
+#   screen.blit(watch_out_surf , watch_out_surf_rect)
+#   screen.blit(lightning, lighting_how_to)
 
   
-def extra_points():
-  bodhi_font = pygame.font.SysFont('arialblack', 28)
-  bodhi_words = bodhi_font.render("Catch              for extra points!", False, 'deeppink')
-  bodhi_words_rect = rainbow.get_rect(midbottom = (97,435))
-  screen.blit(bodhi_words, bodhi_words_rect)
-  screen.blit(rainbow, rainbow_how_to)
+# def extra_points():
+#   bodhi_font = pygame.font.SysFont('arialblack', 28)
+#   bodhi_words = bodhi_font.render("Catch              for extra points!", False, 'deeppink')
+#   bodhi_words_rect = rainbow.get_rect(midbottom = (97,435))
+#   screen.blit(bodhi_words, bodhi_words_rect)
+#   screen.blit(rainbow, rainbow_how_to)
 def title_screen():
   welcome_surf()
-  how_to_move()
-  catching_cloud()
-  watch_out()
-  extra_points()
+  # how_to_move()
+  # catching_cloud()
+  # watch_out()
+  # extra_points()
 
 
 
-#Carolyn Timer
+#Cloud Timer
 
-def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_list, rainbow_rect_list):
+def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, lightning_rect_list, rainbow_rect_list):
   if score >= 25:
     if cloud_rect_list:
       for cloud_rect in cloud_rect_list:
@@ -230,9 +230,9 @@ def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_li
     if blackcloud_rect_list:
       for blackcloud_rect in blackcloud_rect_list:
         blackcloud_rect.y += 2
-    if bolt_rect_list:
-      for lightning_bolt_rect in bolt_rect_list:
-        lightning_bolt_rect.y += 2
+    if lightning_rect_list:
+      for lightning_rect in lightning_rect_list:
+        lightning_rect.y += 2
     if rainbow_rect_list:
       for rainbow_rect in rainbow_rect_list:
         rainbow_rect.y += 2
@@ -243,9 +243,9 @@ def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_li
     if blackcloud_rect_list:
       for blackcloud_rect in blackcloud_rect_list:
         blackcloud_rect.y += 2
-    if bolt_rect_list:
-      for lightning_bolt_rect in bolt_rect_list:
-        lightning_bolt_rect.y += 2
+    if lightning_rect_list:
+      for lightning_rect in lightning_rect_list:
+        lightning_rect.y += 2
     if rainbow_rect_list:
       for rainbow_rect in rainbow_rect_list:
         rainbow_rect.y += 2
@@ -256,9 +256,9 @@ def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_li
     if blackcloud_rect_list:
       for blackcloud_rect in blackcloud_rect_list:
         blackcloud_rect.y += 2
-    if bolt_rect_list:
-      for lightning_bolt_rect in bolt_rect_list:
-        lightning_bolt_rect.y += 2
+    if lightning_rect_list:
+      for lightning_rect in lightning_rect_list:
+        lightning_rect.y += 2
     if rainbow_rect_list:
       for rainbow_rect in rainbow_rect_list:
         rainbow_rect.y += 2
@@ -269,9 +269,9 @@ def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_li
     if blackcloud_rect_list:
       for blackcloud_rect in blackcloud_rect_list:
         blackcloud_rect.y += 2
-    if bolt_rect_list:
-      for lightning_bolt_rect in bolt_rect_list:
-        lightning_bolt_rect.y += 2
+    if lightning_rect_list:
+      for lightning_rect in lightning_rect_list:
+        lightning_rect.y += 2
     if rainbow_rect_list:
       for rainbow_rect in rainbow_rect_list:
           rainbow_rect.y += 2
@@ -280,16 +280,16 @@ def increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_li
 
 #cloud Timer
 cloud_rect_list = []
-cloud_timer = pygame.USEREVENT + 1
+cloud_timer = pygame.USEREVENT + 5
 pygame.time.set_timer(cloud_timer, 1500)
 #blackcloud Timer
 blackcloud_rect_list = []
 blackcloud_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(blackcloud_timer, 1500)
-#Bolt Timer
-bolt_rect_list = []
-lightning_bolt_timer = pygame.USEREVENT + 2
-pygame.time.set_timer(lightning_bolt_timer, 2000)
+pygame.time.set_timer(blackcloud_timer, 1750)
+#lightning Timer
+lightning_rect_list = []
+lightning_timer = pygame.USEREVENT + 2
+pygame.time.set_timer(lightning_timer, 2000)
 #rainbow Timer
 rainbow_rect_list = []
 rainbow_timer = pygame.USEREVENT + 3
@@ -300,6 +300,17 @@ how_to_play_timer = pygame.USEREVENT + 4
 pygame.time.set_timer(how_to_play_timer, 1000)
 count_down = 5
 
+
+
+SCREEN = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("Menu")
+
+BG = pygame.image.load("graphic/sky.png").convert_alpha()
+
+def get_font(size): # Returns Press-Start-2P in the desired size
+    return pygame.font.SysFont('arialblack', size)
+
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -309,7 +320,7 @@ while True:
           if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             game_active = True
             rainbow_rect_list = []
-            bolt_rect_list = []
+            lightning_rect_list = []
             cloud_rect_list = []
             blackcloud_rect_list = []
             how_to_play = 0
@@ -326,13 +337,13 @@ while True:
         #Falling Object Timers and Lists Action
         if game_active and how_to_play_timer >= 5:
           if event.type == cloud_timer and count_down <=0:
-              cloud_rect_list.append(cloud.get_rect(midright=(random.randint(0, 1280), 0)))
+              cloud_rect_list.append(cloud.get_rect(midright=(random.randint(50, 1250), 0)))
           if event.type == blackcloud_timer and count_down <=0:
-              blackcloud_rect_list.append(blackcloud.get_rect(midright=(random.randint(0, 1280), 0)))
-          if event.type == lightning_bolt_timer and count_down <= -2:
-              bolt_rect_list.append(lightning_bolt.get_rect(topright=(random.randint(50, 400), 0)))
+              blackcloud_rect_list.append(blackcloud.get_rect(midright=(random.randint(50, 1250), 0)))
+          if event.type == lightning_timer and count_down <= -2:
+              lightning_rect_list.append(lightning.get_rect(topright=(random.randint(50, 1250), 0)))
           if event.type == rainbow_timer and count_down <=0:
-              rainbow_rect_list.append(rainbow.get_rect(topright=(random.randint(0, 400), 0)))
+              rainbow_rect_list.append(rainbow.get_rect(topright=(random.randint(50, 1250), 0)))
     if game_active:
       if how_to_play < 5:
         background()
@@ -344,9 +355,9 @@ while True:
         cloud_movement(cloud_rect_list)
         blackcloud_movement(blackcloud_rect_list)
         rainbow_movement(rainbow_rect_list)
-        lightning_bolt_movement(bolt_rect_list,)
+        lightning_movement(lightning_rect_list)
         plane_movement()
-        increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, bolt_rect_list, rainbow_rect_list)     
+        increase_difficulty(score,cloud_rect_list,blackcloud_rect_list, lightning_rect_list, rainbow_rect_list)     
         #ADDING POINTS
         if rainbow_rect_list:
           for rainbow_rect in rainbow_rect_list:
@@ -358,18 +369,18 @@ while True:
           for cloud_rect in cloud_rect_list:
             if plane_catch_rect.colliderect(cloud_rect):
               score += 1
-              cloud_rect.y = 700
+              cloud_rect.y = 720
               display_score(score)
         if blackcloud_rect_list:
           for blackcloud_rect in blackcloud_rect_list:
             if plane_catch_rect.colliderect(blackcloud_rect):
               score -= 1
-              blackcloud_rect.y = 700
+              blackcloud_rect.y = 720
               display_score(score)
         #END OF GAME:
-        if bolt_rect_list:
-          for bolt_rect in bolt_rect_list:
-            if plane_catch_rect.colliderect(bolt_rect):
+        if lightning_rect_list:
+          for lightning_rect in lightning_rect_list:
+            if plane_catch_rect.colliderect(lightning_rect):
               game_active = False
               final_score = score
     else:
